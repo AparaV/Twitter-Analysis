@@ -3,6 +3,8 @@ import re
 import operator
 import string
 import collections
+import vincent
+import pandas
 from collections import Counter
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
@@ -43,7 +45,7 @@ def preprocess(s, lowercase=False):
 	return tokens
 
 punctuation = list(string.punctuation)
-others = ['RT', 'via', u'\u2026', 'The', u'\u2019', 'amp']
+others = ['RT', 'via', u'\u2026', 'The', u'\u2019', 'amp', 'nil']
 stop = stopwords.words('english') + punctuation + others
 
 #Find most common words
@@ -52,10 +54,11 @@ def terms_only(fname, number):
 		count_all = Counter()
 		for line in f:
 			tweet = json.loads(line)
-			terms_stop = [term for term in preprocess(tweet['text'])
+			terms_stop = [term for term in preprocess(tweet.get('text', 'nil'))
 						  if term not in stop and not term.startswith(('#', '@'))]
 			count_all.update(terms_stop)
 		print(count_all.most_common(number))
+		return count_all.most_common(number)
 
 #Find most common hashtags
 def hash_only(fname, number):
@@ -63,7 +66,7 @@ def hash_only(fname, number):
 		count_all = Counter()
 		for line in f:
 			tweet = json.loads(line)
-			terms_hash = [term for term in preprocess(tweet['text'])
+			terms_hash = [term for term in preprocess(tweet.get('text', 'nil'))
 						  if term not in stop if term.startswith('#')]
 			count_all.update(terms_hash)
 		print(count_all.most_common(number))
@@ -74,7 +77,7 @@ def mentions_only(fname, number):
 		count_all = Counter()
 		for line in f:
 			tweet = json.loads(line)
-			terms_mentions = [term for term in preprocess(tweet['text'])
+			terms_mentions = [term for term in preprocess(tweet.get('text', 'nil'))
 							  if term not in stop if term.startswith('@')]
 			count_all.update(terms_mentions)
 		print(count_all.most_common(number))
@@ -86,7 +89,7 @@ def cooccurances(fname, number):
 
 		for line in f:
 			tweet = json.loads(line)
-			terms_only = [term for term in preprocess(tweet['text'])
+			terms_only = [term for term in preprocess(tweet.get('text', 'nil'))
 						  if term not in stop and not term.startswith(('#', '@'))]
 			for i in range(len(terms_only)):
 				for j in range(i+1, len(terms_only)):
@@ -103,9 +106,9 @@ def cooccurances(fname, number):
 
 #Main Function Begins
 if __name__ == "__main__":
-	fname = "tweets.json"
+	fname = "liveStream.json"
 	number = 10
-
+	'''
 	print "Terms only"
 	terms_only(fname, number)
 
@@ -117,3 +120,30 @@ if __name__ == "__main__":
 
 	print "\nCooccurances"
 	cooccurances(fname, number)
+	'''
+
+	word_freq = terms_only(fname, 20)
+	labels, freq = zip(*word_freq)
+	data = {'data': freq, 'x': labels}
+	bar = vincent.Bar(data, iter_idx = 'x')
+	bar.to_json('term_freq.json')
+
+	#Time data visualization
+	dates_Search = []
+	with open(fname, 'r') as f:
+		for line in f:
+			tweet = json.loads(line)
+			terms_only = [term for term in preprocess(tweet.get('text', 'nil'))]
+			if 'search' in terms_only:
+				dates_Search.append(tweet['created_at'])
+
+	ones = [1]*len(dates_Search)
+
+	idx = pandas.DatetimeIndex(dates_Search)
+	Search = pandas.Series(ones, idx)
+
+	per_minute = Search.resample('1Min', how='sum').fillna(0)
+
+	time_chart = vincent.Line(per_minute)
+	time_chart.axis_titles(x="time", y="Freq")
+	time_chart.to_json('time_chart.json')
