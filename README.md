@@ -1,5 +1,5 @@
-#Twitter User Analysis
-Analyze a user's most recent tweets and decipher their interests
+#Twitter Analysis
+Analyze most recent tweets and calculate the 'popularity' of a particular topic
 
 ##Dependencies
 1. `pip install tweepy`
