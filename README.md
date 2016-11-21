@@ -13,7 +13,7 @@ Additionally, download the stopwords package by going into the python console
 A GUI window will open. Go to Corpora and download stopwords
 
 ##Other important information
-You will need an active Twitter account in order to use the code. You must register a new app with that Twitter account to get the following credentials
+You will need an active Twitter account in order to use the code. You must register a new app with that Twitter account to get the following credentials and put them in a file named 'config' in the same order.
 
 + Consumer Key (API Key)
 + Consumer Secret (API Secret)
