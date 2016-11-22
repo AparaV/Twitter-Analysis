@@ -1,5 +1,6 @@
 import json
 import tweepy
+import time
 from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
@@ -19,10 +20,19 @@ auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth)
 
+runTime = 5 * 60 #5 minutes
+
 #Listening to Live Tweets
 class MyListener(StreamListener):
+	
+	def __init__(self):
+		self.startTime = time.time()
 
 	def on_data(self, data):
+
+		if (time.time() - self.startTime) >= runTime:
+			return False
+			
 		try:
 			with open('liveStream.json', 'a') as f:
 				f.write(data)
@@ -37,15 +47,22 @@ class MyListener(StreamListener):
 			print "Connection not established"
 		return False
 
-#Tracking live tweets with keyword "tracking"
-twitter_stream = Stream(auth, MyListener())
-twitter_stream.filter(track = ['tracking'])
+if __name__ == "__main__":
+	
+	print "Enter a key word to track for 5 minutes. Be as specific as possible"
+	trackWord = str(raw_input())
+	
+	#Tracking live tweets with keyword
+	twitter_stream = Stream(auth, MyListener())
+	twitter_stream.filter(track = [trackWord])
 
-
-#Gathering tweets from a user with screen_name = "screen_name"
-'''
-for status in tweepy.Cursor(api.user_timeline, screen_name = "screen_name").items(200):
-	with open("screen_name_tweets.json", "a") as f:
-		json.dump(dict(status._json), f)
-		f.write('\n')
-'''
+	#Gathering tweets of a user
+	'''
+	print "Enter the user <screen_name> to track"
+	screenName = str(raw_input())
+	fname = screenName + "_tweets.json"
+	for status in tweepy.Cursor(api.user_timeline, screen_name = screenName).items(200):
+		with open(fname, "a") as f:
+			json.dump(dict(status._json), f)
+			f.write('\n')
+	'''
