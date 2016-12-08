@@ -4,11 +4,11 @@ import json
 def likeScore(likes, followers):
     if followers == 0:
         return 0
-    return float(likes) / followers * 100
+    return float(likes) / followers
 
 
 def findRetweetIndex(retweetCount, totalTweets):
-    return float(retweetCount) / totalTweets * 100
+    return float(retweetCount) / totalTweets
 
 
 def findFavoriteIndex(likes):
