@@ -5,9 +5,9 @@ runTime = 5 * 60  # 5 minutes
 
 # Listening to Live Tweets
 class Listener(StreamListener):
-    def __init__(self):
+    def __init__(self, file='liveStream.json'):
         self.startTime = time.time()
-        self.fname = 'liveStream.json'
+        self.fname = file
         open(self.fname, 'w').close()
 
     def on_data(self, data):

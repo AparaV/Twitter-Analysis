@@ -6,7 +6,7 @@ config
 
 #JSON files
 liveStream.json
-tweets.json
+*tweets.json
 term_freq.json
 time_chart.json
 

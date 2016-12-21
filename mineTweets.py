@@ -1,27 +1,13 @@
 import tweepy
+import json
 from tweepy import OAuthHandler
 from tweepy import Stream
 from liveListener import Listener
 
-# # File containing API and Access credentials
-# config_fname = 'config'
-
-# # App credentials
-# with open(config_fname, 'r') as f:
-#     consumer_key = f.readline().replace('\n', '')
-#     consumer_secret = f.readline().replace('\n', '')
-#     access_token = f.readline().replace('\n', '')
-#     access_secret = f.readline().replace('\n', '')
-#
-# auth = OAuthHandler(consumer_key, consumer_secret)
-# auth.set_access_token(access_token, access_secret)
-#
-# api = tweepy.API(auth)
-
 class TweetMiner:
     def __init__(self, config_fname='config'):
-        _readdetails(config_fname)
-        _authenticate(self)
+        self._readdetails(config_fname)
+        self._authenticate()
 
     def choice(self):
         self.state = None
@@ -32,12 +18,31 @@ class TweetMiner:
                 break
             print "Enter a valid choice"
         #Call functions
+        if self.state == '1':
+            return self.trackLiveTweets()
+        elif self.state =='2':
+            return self.getUserTweets()
 
+    #Tracking live tweets for popularity calculation
     def trackLiveTweets(self):
         print "Enter a key word to track for 5 minutes. Be as specific as possible"
+        self.file = 'tweets.json'
         self.trackWord = str(raw_input())
-        self.twitter_stream = Stream(self.auth, Listener())
+        self.twitter_stream = Stream(self.auth, Listener(self.file))
         self.twitter_stream.filter(track=[self.trackWord])
+        return self.file
+
+    #Getting tweets from user profile for analysis
+    def getUserTweets(self):
+        print "Enter the user <screen_name> to track. For example, '@user' without the quotes."
+        self.screenName = str(raw_input())
+        self.file = self.screenName + "_tweets.json"
+        open(self.file, 'w').close()
+        for status in tweepy.Cursor(self.api.user_timeline, screen_name=self.screenName).items(200):
+            with open(self.file, "a") as f:
+                json.dump(dict(status._json), f)
+                f.write('\n')
+        return self.file
 
     def _readdetails(self, config_fname):
         with open(config_fname, 'r') as f:
@@ -53,20 +58,6 @@ class TweetMiner:
 
 
 if __name__ == "__main__":
-    # print "Enter a key word to track for 5 minutes. Be as specific as possible"
-    # trackWord = str(raw_input())
 
-    # Tracking live tweets with keyword
-    twitter_stream = Stream(auth, Listener())
-    twitter_stream.filter(track=[trackWord])
-
-    # Gathering tweets of a user
-    '''
-	print "Enter the user <screen_name> to track"
-	screenName = str(raw_input())
-	fname = screenName + "_tweets.json"
-	for status in tweepy.Cursor(api.user_timeline, screen_name = screenName).items(200):
-		with open(fname, "a") as f:
-			json.dump(dict(status._json), f)
-			f.write('\n')
-	'''
+    tweeter = TweetMiner()
+    tweeter.choice()
