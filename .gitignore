@@ -1,5 +1,14 @@
+#Config file
 config
+
+#Compiled python files
+/*.pyc
+
+#JSON files
 liveStream.json
 tweets.json
 term_freq.json
 time_chart.json
+
+#Pycharm data
+.idea/
