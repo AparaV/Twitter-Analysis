@@ -27,5 +27,5 @@ You will need an active Twitter account in order to use the code. You must regis
 Be sure to keep these information confidential!
 
 ##What's next?
-Right now, the math is a bit wibbly wobbly. So when you calculate the popularity, you will not get an absolutely deterministic score. You will have to get the scores of a few other phrases in order to get a qualitative feel. Hence, the algorithm I still needs a lot of work.
-I plan to incorporate a time frequency feature that would display how often a phrase was tweeted or how often your friend is active on Twitter.
+Right now, the math is a bit wibbly wobbly. So when you calculate the popularity, you will not get an absolutely deterministic score. You will have to get the scores of a few other phrases in order to get a qualitative feel. Hence, the algorithm I use still needs a lot of work.
+I plan to incorporate (if I find the time) a time frequency feature that would display how often a phrase was tweeted or how often your friend is active on Twitter.
