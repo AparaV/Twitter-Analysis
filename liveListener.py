@@ -3,6 +3,7 @@ from tweepy.streaming import StreamListener
 
 runTime = 5 * 60  # 5 minutes
 
+
 # Listening to Live Tweets
 class Listener(StreamListener):
     def __init__(self, file='liveStream.json'):

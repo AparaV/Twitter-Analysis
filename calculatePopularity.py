@@ -1,64 +1,59 @@
 import json
 
 
-def likeScore(likes, followers):
-    if followers == 0:
-        return 0
-    return float(likes) / followers
+class CalculatePopularity():
+    def __init__(self, file='liveStream.json'):
+        self.fname = file
 
+    def calculateScore(self):
+        self.totalTweets = 0
+        self.retweetCount = 0
+        self.likes_score = []
+        self.followers_score = []
+        with open(self.fname, 'r') as f:
+            for line in f:
+                self.totalTweets += 1
+                tweet = json.loads(line)
 
-def findRetweetIndex(retweetCount, totalTweets):
-    return float(retweetCount) / totalTweets
+                try:
+                    self.retweetCount += int(tweet['retweeted_status']['retweet_count'])
+                except KeyError:
+                    self.retweetCount += 0
 
+                try:
+                    followers = int(tweet['user']['followers_count'])
+                except KeyError:
+                    followers = 0
+                self.followers_score.append(followers)
 
-def findFavoriteIndex(likes):
-    return sum(likes) / float(len(likes))
+                try:
+                    likes = int(tweet['retweeted_status']['favorite_count'])
+                except KeyError:
+                    likes = 0
+                likeIndex = self._likeScore(likes, followers)
+                self.likes_score.append(likeIndex)
 
+        self.retweetIndex = self._findRetweetIndex(self.retweetCount, self.totalTweets)
+        self.favoriteIndex = self._findFavoriteIndex(self.likes_score)
+        self.followersIndex = self._findFollowersIndex(self.followers_score)
 
-def findFollowersIndex(followers):
-    return sum(followers) / float(len(followers))
+        print "Retweet Index", self.retweetIndex
+        print "Favorite Index", self.favoriteIndex
+        print "Followers Index", self.followersIndex
 
+        popularityScore = int(self.retweetIndex + self.favoriteIndex + self.followersIndex + self.totalTweets)
+        return popularityScore
 
-fname = "liveStream.json"
+    def _likeScore(self, likes, followers):
+        if followers == 0:
+            return 0
+        return float(likes) / followers
 
-if __name__ == "__main__":
-    totalTweets = 0
-    retweetCount = 0
-    likes_score = []
-    followers_score = []
+    def _findRetweetIndex(self, retweetCount, totalTweets):
+        return float(retweetCount) / totalTweets
 
-    # calculate popularity of tweets
-    with open(fname, 'r') as f:
-        for line in f:
-            totalTweets += 1
-            tweet = json.loads(line)
+    def _findFavoriteIndex(self, likes):
+        return sum(likes) / float(len(likes))
 
-            try:
-                retweetCount += int(tweet['retweeted_status']['retweet_count'])
-            except KeyError:
-                retweetCount += 0
-
-            try:
-                followers = int(tweet['user']['followers_count'])
-            except KeyError:
-                followers = 0
-            followers_score.append(followers)
-
-            try:
-                likes = int(tweet['retweeted_status']['favorite_count'])
-            except KeyError:
-                likes = 0
-            likeIndex = likeScore(likes, followers)
-            likes_score.append(likeIndex)
-
-    retweetIndex = findRetweetIndex(retweetCount, totalTweets)
-    favoriteIndex = findFavoriteIndex(likes_score)
-    followersIndex = findFollowersIndex(followers_score)
-
-    print "Retweet Index", retweetIndex
-    print "Favorite Index", favoriteIndex
-    print "Followers Index", followersIndex
-
-    popularityScore = int(retweetIndex + favoriteIndex + followersIndex + totalTweets)
-
-    print "Popularity Score", popularityScore
+    def _findFollowersIndex(self, followers):
+        return sum(followers) / float(len(followers))

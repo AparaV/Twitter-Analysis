@@ -4,12 +4,13 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from liveListener import Listener
 
+
 class TweetMiner:
     def __init__(self, config_fname='config'):
         self._readdetails(config_fname)
         self._authenticate()
 
-    def choice(self):
+    def mine(self):
         self.state = None
         while self.state != '1' or self.state != '2':
             print "Press 1 to calculate popularity of a phrase. Press 2 to analyze a user profile."
@@ -17,13 +18,13 @@ class TweetMiner:
             if self.state == '1' or self.state == '2':
                 break
             print "Enter a valid choice"
-        #Call functions
+        # Call functions
         if self.state == '1':
-            return self.trackLiveTweets()
-        elif self.state =='2':
-            return self.getUserTweets()
+            return self.state, self.trackLiveTweets()
+        elif self.state == '2':
+            return self.state, self.getUserTweets()
 
-    #Tracking live tweets for popularity calculation
+    # Tracking live tweets for popularity calculation
     def trackLiveTweets(self):
         print "Enter a key word to track for 5 minutes. Be as specific as possible"
         self.file = 'tweets.json'
@@ -32,7 +33,7 @@ class TweetMiner:
         self.twitter_stream.filter(track=[self.trackWord])
         return self.file
 
-    #Getting tweets from user profile for analysis
+    # Getting tweets from user profile for analysis
     def getUserTweets(self):
         print "Enter the user <screen_name> to track. For example, '@user' without the quotes."
         self.screenName = str(raw_input())
@@ -55,9 +56,3 @@ class TweetMiner:
         self.auth = OAuthHandler(self.consumer_key, self.consumer_secret)
         self.auth.set_access_token(self.access_token, self.access_secret)
         self.api = tweepy.API(self.auth)
-
-
-if __name__ == "__main__":
-
-    tweeter = TweetMiner()
-    tweeter.choice()
