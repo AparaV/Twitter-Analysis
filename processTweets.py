@@ -7,7 +7,9 @@ from collections import Counter
 
 import pandas
 import vincent
+from server import Server
 from nltk.corpus import stopwords
+
 
 
 class AnalyzeUser():
@@ -27,7 +29,9 @@ class AnalyzeUser():
         common_coocurrances = self.cooccurances()
         self.toJSON(common_terms)
         #self.timeDataVisualization()
-        self.printInstructions()
+        #self.printInstructions()
+        self.server = Server()
+        self.server.openbrowser('http://localhost:8000/chart.html')
 
     def printInstructions(self):
         print "Setup server by going into console:"
