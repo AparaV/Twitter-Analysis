@@ -39,11 +39,12 @@
             <h1>How popular is it on Twitter?</h1>
             <h3>Find the popularity of a phrase on Twitter, live!</h3>
             <hr class="intro-divider">
-            <p>Type in the phrase and hit the button</p>
+            <p>Type in the word (or phrase) and hit the button</p>
             <p>You will have to wait for a few minutes while we gather data and compute the score</p>
             <p>Meanwhile, you can go read about how the score in computed <a href="#">here</a></p>
             <form action="{{ url_for('calc')}}" method="post">
-              <input type="text" class="" name="query">
+              <input type="text" name="query" value="the_phrase">
+              <input type="number" name="runtime" value="60">
               <button type="submit" name="button" class="btn">Calculate!</button>
             </form>
             {% if pop is not none and phrase %}
@@ -53,9 +54,9 @@
             <p>
               The formula is still a bit wibbly wobbly and it will not give you an absolute determinstic score.<br>
               However, a few other phrases that you think are way more (or less) popular will help you get a qualitative (or relativistic) sense.<br><br>
-              The default timeout is 5 minutes. So you will have to wait for 5 minutes to get a score.<br>
+              The default timeout is 60 seconds. So you will have to wait for 60 seconds to get a score. You can modify this if you want.<br>
               If you are not getting any result after the time limit, it most probably means that the phrase was not tweeted during the interval.<br><br>
-              If you think you broke the app (or found a bug), report it via <a href="https://github.com/traxex33/Twitter-Analysis/issues">GitHub</a> or <a href="mailto:ssapar@gmail.com">mail</a>.<br><br>
+              If you think you found a bug (or broke it), report it via <a href="https://github.com/traxex33/Twitter-Analysis/issues">GitHub</a> or <a href="mailto:ssapar@gmail.com">mail</a>.<br><br>
             </p>
           </div>
         </div>

@@ -16,7 +16,7 @@ def get_credentials(fname='config'):
     api = tweepy.API(auth)
     return auth, api
 
-def get_live_tweets(auth, phrase, fname='liveStream.json', runTime=30):
+def get_live_tweets(auth, phrase, fname='liveStream.json', runTime=60):
     twitter_stream = Stream(auth, Listener(fname))
     twitter_stream.filter(track=[phrase], async=True)
     time.sleep(runTime)
