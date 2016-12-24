@@ -13,11 +13,11 @@ class TweetMiner:
     def mine(self):
         self.state = None
         while self.state != '1' or self.state != '2':
-            print "Press 1 to calculate popularity of a phrase. Press 2 to analyze a user profile."
+            print ("Press 1 to calculate popularity of a phrase. Press 2 to analyze a user profile.")
             self.state = str(raw_input())
             if self.state == '1' or self.state == '2':
                 break
-            print "Enter a valid choice"
+            print ("Enter a valid choice")
         # Call functions
         if self.state == '1':
             return self.state, self.trackLiveTweets()
@@ -26,7 +26,7 @@ class TweetMiner:
 
     # Tracking live tweets for popularity calculation
     def trackLiveTweets(self):
-        print "Enter a key word to track for 5 minutes. Be as specific as possible"
+        print ("Enter a key word to track for 5 minutes. Be as specific as possible")
         self.file = 'tweets.json'
         self.trackWord = str(raw_input())
         self.twitter_stream = Stream(self.auth, Listener(self.file))
@@ -35,7 +35,7 @@ class TweetMiner:
 
     # Getting tweets from user profile for analysis
     def getUserTweets(self):
-        print "Enter the user <screen_name> to track. For example, '@user' without the quotes."
+        print ("Enter the user <screen_name> to track. For example, '@user' without the quotes.")
         self.screenName = str(raw_input())
         self.file = self.screenName + "_tweets.json"
         open(self.file, 'w').close()

@@ -2,3 +2,6 @@ tweepy
 pandas
 vincent
 nltk
+flask
+gunicorn
+psycopg2

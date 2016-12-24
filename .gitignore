@@ -3,6 +3,7 @@ config
 
 #Compiled python files
 /*.pyc
+__pycache__/
 
 #JSON files
 liveStream.json

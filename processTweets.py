@@ -33,11 +33,11 @@ class AnalyzeUser():
         #self.server = Server()
         #self.server.openbrowser('http://localhost:8000/chart.html')
 
-    def printInstructions(self):
-        print "Setup server by going into console:"
-        print ">>>python -m SimpleHTTPServer"
-        print "Go to http://localhost:8000 on your browser"
-        print "View chart.html"
+    # def printInstructions(self):
+    #     print "Setup server by going into console:"
+    #     print ">>>python -m SimpleHTTPServer"
+    #     print "Go to http://localhost:8000 on your browser"
+    #     print "View chart.html"
 
     def toJSON(self, common):
         labels, freq = zip(*common)

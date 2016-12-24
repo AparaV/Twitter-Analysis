@@ -12,11 +12,11 @@ class Listener(StreamListener):
                 f.write(data)
                 return True
         except BaseException as e:
-            print "Error"
+            print ("Error")
         return True
 
     def on_error(self, status_code):
-        print status_code
+        print (status_code)
         if status_code == 420:
-            print "Connection not established"
+            print ("Connection not established")
         return False

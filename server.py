@@ -19,14 +19,14 @@ class Server:
         q = str(raw_input('Hit Q to exit server.\n'))
         while q != 'q':
             q = str(raw_input())
-        print 'Shutting down server at port', self.PORT
+        print ('Shutting down server at port', self.PORT)
         self.httpd.shutdown()
         sys.exit(0)
 
     def _initserver(self, port):
         self.PORT = 8000
         self.httpd = HTTPServer(('localhost', self.PORT), SimpleHTTPRequestHandler)
-        print 'Serving at port', self.PORT
+        print ('Serving at port', self.PORT)
         self.th = threading.Thread(target=self.httpd.serve_forever)
         self.th.daemon = True
         self.th.start()
