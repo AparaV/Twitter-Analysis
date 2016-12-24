@@ -37,9 +37,9 @@ class CalculatePopularity():
         self.favoriteIndex = self._findFavoriteIndex(self.likes_score)
         self.followersIndex = self._findFollowersIndex(self.followers_score)
 
-        print "Retweet Index", self.retweetIndex
-        print "Favorite Index", self.favoriteIndex
-        print "Followers Index", self.followersIndex
+        # print "Retweet Index", self.retweetIndex
+        # print "Favorite Index", self.favoriteIndex
+        # print "Followers Index", self.followersIndex
 
         popularityScore = int(self.retweetIndex + self.favoriteIndex + self.followersIndex + self.totalTweets)
         return popularityScore

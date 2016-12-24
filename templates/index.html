@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Popularity on Twitter</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/landing-page.css') }}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body style="background-color: #5bc0de;">
+
+    <div class="container intro-header">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="intro-message">
+            <h1>How popular is it on Twitter?</h1>
+            <h3>Find the popularity of a phrase on Twitter, live!</h3>
+            <hr class="intro-divider">
+            <p>Type in the phrase and hit the button</p>
+            <p>You will have to wait for a few minutes while we gather data and compute the score</p>
+            <p>Meanwhile, you can go read about how the score in computed <a href="#">here</a></p>
+            <form action="{{ url_for('calc')}}" method="post">
+              <input type="text" class="" name="text">
+              <button type="submit" name="button" class="btn">Calculate!</button>
+            </form>
+            {% if x and phrase %}
+              <h5>The popularity of '{{ phrase }}' is {{ x }}</h5>
+            {% endif %}
+            <hr class="intro-divider">
+            <p>
+              The formula is still a bit wibbly wobbly and it will not give you an absolute determinstic score.<br>
+              However, a few other phrases that you think are way more (or less) popular will help you get a qualitative (or relativistic) sense.<br><br>
+              The default timeout is 5 minutes. So you will have to wait for 5 minutes to get a score.<br>
+              If you are not getting any result after the time limit, it most probably means that the phrase was not tweeted during the interval.<br><br>
+              If you think you broke the app (or found a bug), report it via <a href="https://github.com/traxex33/Twitter-Analysis/issues">GitHub</a> or <a href="mailto:ssapar@gmail.com">mail</a>.<br><br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8" style="text-align:center">
+          <a class="github-button" href="https://github.com/traxex33/Twitter-Analysis" data-style="mega" aria-label="Star traxex33/Twitter-Analysis on GitHub">Star</a>
+          <a class="github-button" href="https://github.com/traxex33" data-style="mega" aria-label="Follow @traxex33 on GitHub">Follow</a>
+          <a class="github-button" href="https://github.com/traxex33/Twitter-Analysis/issues" data-style="mega" aria-label="Issue traxex33/Twitter-Analysis on GitHub">Report Issue</a>
+          <br><br>
+        </div>
+        <div class="col-lg-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8" style="text-align:center">
+          <a href="#">Read my blog post for more about this app</a>
+          <br><br>
+        </div>
+        <div class="col-lg-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8" style="text-align:center">
+          <a href="https://twitter.com/apara_v"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
+          <a href="https://www.facebook.com/aparavenkateswaran"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
+          <a href="https://traxex33.github.io"><i class="fa fa-globe fa-2x" aria-hidden="true"></i></a>
+          <br><br>
+        </div>
+        <div class="col-lg-2"></div>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+</body>
+
+</html>
