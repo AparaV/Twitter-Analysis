@@ -8,20 +8,20 @@ app = Flask(__name__)
 fname = 'liveStream.json'
 
 @app.route("/")
-def get_input():
+def init():
     return render_template('index.html')
 
 @app.route("/", methods=['POST'])
 def calc():
     text = request.form['text']
     print text
-    x = flask_pop(text)
-    print text
-    return render_template('index.html', phrase=text, x=x)
+    x = calculate(text)
+    print x
+    return render_template('index.html', phrase=text, pop=x)
 
-def flask_pop(phrase):
+def calculate(phrase):
     auth, api = support.get_credentials()
-    support.get_live_tweets(auth, phrase, fname=fname)
+    support.get_live_tweets(auth, phrase, fname=fname, runTime=10)
     score = support.get_popularity(fname=fname)
     return score
 

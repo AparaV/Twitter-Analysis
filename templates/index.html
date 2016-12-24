@@ -46,8 +46,8 @@
               <input type="text" class="" name="text">
               <button type="submit" name="button" class="btn">Calculate!</button>
             </form>
-            {% if x and phrase %}
-              <h5>The popularity of '{{ phrase }}' is {{ x }}</h5>
+            {% if pop is not none and phrase %}
+              <h5>The popularity of '{{ phrase }}' is {{ pop }}</h5>
             {% endif %}
             <hr class="intro-divider">
             <p>

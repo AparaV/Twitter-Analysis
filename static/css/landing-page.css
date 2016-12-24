@@ -26,6 +26,10 @@ a {
   text-decoration: underline;
 }
 
+a:hover {
+  color: red;
+}
+
 .topnav {
     font-size: 14px;
 }
