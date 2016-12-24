@@ -1,7 +1,7 @@
 import time
 from tweepy.streaming import StreamListener
 
-runTime = 5 * 60  # 5 minutes
+runTime = 30  # 5 minutes - change it back to 5 minutes
 
 
 # Listening to Live Tweets
@@ -11,6 +11,7 @@ class Listener(StreamListener):
         self.fname = file
         open(self.fname, 'w').close()
 
+    #If I don't get any data, this function doesnt shut down!
     def on_data(self, data):
 
         if (time.time() - self.startTime) >= runTime:

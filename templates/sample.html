@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+  {% if name %}
+    <h1>Hello {{ name }}!</h1>
+  {% else %}
+    <h1>Hello, World!</h1>
+  {% endif %}
+    <form action="{{ url_for('calc')}}" method="post">
+      <input type="text" name="text">
+      <button type="submit" name="button">Calculate!</button>
+    </form>
+  {% if x %}
+    <h3>The popularity of is {{ x }}</h3>
+  {% else %}
+    <h3>Enter text to calculate popularity</h3>
+  {% endif %}
+{% endblock %}
