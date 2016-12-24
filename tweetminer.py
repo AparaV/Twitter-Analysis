@@ -22,7 +22,7 @@ def get_live_tweets(auth, phrase, fname='liveStream.json', runTime=30):
     time.sleep(runTime)
     twitter_stream.disconnect()
 
-def get_popularity(fname='liveStream.json'):
-    temp = CalculatePopularity(fname)
+def get_popularity(runTime, fname='liveStream.json'):
+    temp = CalculatePopularity(runTime=runTime, file=fname)
     score = temp.calculateScore()
     return score

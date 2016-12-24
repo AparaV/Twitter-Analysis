@@ -43,7 +43,7 @@
             <p>You will have to wait for a few minutes while we gather data and compute the score</p>
             <p>Meanwhile, you can go read about how the score in computed <a href="#">here</a></p>
             <form action="{{ url_for('calc')}}" method="post">
-              <input type="text" class="" name="text">
+              <input type="text" class="" name="query">
               <button type="submit" name="button" class="btn">Calculate!</button>
             </form>
             {% if pop is not none and phrase %}

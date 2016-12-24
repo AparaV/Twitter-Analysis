@@ -2,7 +2,8 @@ import json
 
 
 class CalculatePopularity():
-    def __init__(self, file='liveStream.json'):
+    def __init__(self, runTime, file='liveStream.json'):
+        self.runTime = runTime
         self.fname = file
 
     def calculateScore(self):
@@ -39,6 +40,11 @@ class CalculatePopularity():
 
         popularityScore = 0
         popularityScore += int(self.retweetIndex + self.favoriteIndex + self.followersIndex + self.totalTweets)
+
+        if self.runTime != 0:
+            popularityScore /= self.runTime
+        else:
+            popularityScore = "Not defined"
 
         return popularityScore
 

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
-import support
+import tweetminer
 
 app = Flask(__name__)
 
@@ -13,16 +13,17 @@ def init():
 
 @app.route("/", methods=['POST'])
 def calc():
-    text = request.form['text']
+    text = request.form['query']
     print text
     x = calculate(text)
     print x
     return render_template('index.html', phrase=text, pop=x)
 
 def calculate(phrase):
-    auth, api = support.get_credentials()
-    support.get_live_tweets(auth, phrase, fname=fname, runTime=10)
-    score = support.get_popularity(fname=fname)
+    runTime = 10
+    auth, api = tweetminer.get_credentials()
+    tweetminer.get_live_tweets(auth, phrase, fname=fname, runTime=runTime)
+    score = tweetminer.get_popularity(runTime=runTime, fname=fname)
     return score
 
 if __name__ == "__main__":
