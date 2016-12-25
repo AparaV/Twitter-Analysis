@@ -5,7 +5,7 @@ import tweetminer
 
 app = Flask(__name__)
 
-fname = 'liveStream.json'
+fname = './tmp/liveStream.json'
 
 @app.route("/")
 def init():

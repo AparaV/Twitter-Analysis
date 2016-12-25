@@ -16,13 +16,13 @@ def get_credentials():
     api = tweepy.API(auth)
     return auth, api
 
-def get_live_tweets(auth, phrase, fname='liveStream.json', runTime=60):
+def get_live_tweets(auth, phrase, fname='./tmp/liveStream.json', runTime=60):
     twitter_stream = Stream(auth, Listener(fname))
     twitter_stream.filter(track=[phrase], async=True)
     time.sleep(runTime)
     twitter_stream.disconnect()
 
-def get_popularity(runTime, fname='liveStream.json'):
+def get_popularity(runTime, fname='./tmp/liveStream.json'):
     temp = CalculatePopularity(runTime=runTime, file=fname)
     score = temp.calculateScore()
     return score
