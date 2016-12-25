@@ -30,9 +30,7 @@ def calc():
 
 @app.route("/result")
 def result():
-    search = Global.phrase
-    x = Global.score
-    return render_template('output.html', text=search, pop=x)
+    return render_template('output.html', text=Global.phrase, pop=Global.score)
 
 def something(text, time):
     Global.score = calculate(text, time)
