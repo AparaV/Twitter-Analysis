@@ -3,9 +3,9 @@
 {% if pop is not none and text %}
   <h5>The popularity of '{{ text }}' is {{ pop }}</h5>
 {% elif text %}
-  <h5>No score computed</h5>
+  <h5>No score computed. Text = {{ text }}</h5>
 {% elif pop  is not none%}
-  <h5>Only the score is available</h5>
+  <h5>Only the score is available. Text = {{ text }}. Score = {{ pop }}</h5>
 {% else %}
   <h5>Could not find data</h5>
 {% endif %}
