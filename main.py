@@ -36,7 +36,9 @@ def calc():
 def result():
     global score
     global phrase
-    return render_template('output.html', text=phrase, pop=score)
+    search = phrase
+    x = score
+    return render_template('output.html', text=search, pop=x)
 
 def something(phrase, time):
     global finished
