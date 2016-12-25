@@ -31,7 +31,6 @@ def calc():
 def result():
     global score
     global phrase
-    print score
     return render_template('output.html', phrase=phrase, pop=score)
 
 def something(phrase, time):
