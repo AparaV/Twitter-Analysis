@@ -2,7 +2,15 @@
 {% block content %}
 {% if pop is not none and text %}
   <h5>The popularity of '{{ text }}' is {{ pop }}</h5>
+{% elif text %}
+  <h5>No score computed</h5>
+{% elif pop  is not none%}
+  <h5>Only the score is available</h5>
 {% else %}
   <h5>Could not find data</h5>
 {% endif %}
+<script>
+  console.log("{{ pop }}")
+  console.log("{{ text }}")
+</script>
 {% endblock %}
