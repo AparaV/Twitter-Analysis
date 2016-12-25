@@ -8,10 +8,10 @@ app = Flask(__name__)
 
 fname = './tmp/liveStream.json'
 
-global th
-global score
-global phrase
-global finished
+th = None
+score = -1
+phrase = ""
+finished = False
 
 @app.route("/")
 def init():
@@ -34,16 +34,12 @@ def calc():
 
 @app.route("/result")
 def result():
-    global score
-    global phrase
-    search = phrase
-    x = score
-    return render_template('output.html', text=search, pop=x)
+    return render_template('output.html', text=phrase, pop=score)
 
-def something(phrase, time):
+def something(text, time):
     global finished
     global score
-    score = calculate(phrase, time)
+    score = calculate(text, time)
     finished = True
 
 @app.route("/status")
@@ -58,8 +54,4 @@ def calculate(text, runTime):
     return x
 
 if __name__ == "__main__":
-    global th
-    global phrase
-    global score
-    global finished
     app.run(debug=True)
