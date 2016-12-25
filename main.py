@@ -29,26 +29,24 @@ def calc():
     phrase = text
     th = Thread(target=something, args=(text, run_time))
     th.start()
-    # x = calculate(text, run_time)
     return render_template('loading.html', text=phrase, time=run_time)
 
 @app.route("/result")
 def result():
     search = phrase
     x = score
-    resetglobal()
+    #resetglobal()
     return render_template('output.html', text=search, pop=x)
 
 def something(text, time):
     global finished
     global score
-    global th
     score = calculate(text, time)
     finished = True
 
 @app.route("/status")
 def status():
-    global finished
+    #global finished
     return jsonify(dict(status=('finished' if finished else 'running')))
 
 def calculate(text, runTime):
