@@ -59,13 +59,13 @@ def calculate(text, runTime):
 
 def resetglobal():
     global th
-    global score
-    global phrase
+    #global score
+    #global phrase
     global finished
     th = None
-    score = -1
-    phrase = ""
+    #score = -1
+    #phrase = ""
     finished = False
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
