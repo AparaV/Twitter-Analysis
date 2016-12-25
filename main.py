@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask import render_template
 from flask import request
+from threading import Thread
 import tweetminer
 
 app = Flask(__name__)
@@ -13,10 +14,35 @@ def init():
 
 @app.route("/", methods=['POST'])
 def calc():
+    global th
+    global finished
+    global score
+    global phrase
     text = request.form['query']
     run_time = int(request.form['runtime'])
-    x = calculate(text, run_time)
-    return render_template('index.html', phrase=text, pop=x)
+    finished = False
+    phrase = text
+    th = Thread(target=something, args=(text, run_time))
+    th.start()
+    # x = calculate(text, run_time)
+    return render_template('loading.html', phrase=phrase, time=run_time)
+
+@app.route("/result")
+def result():
+    global score
+    global phrase
+    print score
+    return render_template('output.html', phrase=phrase, pop=score)
+
+def something(phrase, time):
+    global finished
+    global score
+    score = calculate(phrase, time)
+    finished = True
+
+@app.route("/status")
+def thread_status():
+    return jsonify(dict(status=('finished' if finished else 'running')))
 
 def calculate(phrase, runTime):
     auth, api = tweetminer.get_credentials()

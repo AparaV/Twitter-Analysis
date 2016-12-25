@@ -21,6 +21,23 @@
     <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        var refresh_id = setInterval(function() {
+            $.get(
+              "{{ url_for('thread_status') }}",
+              function(data) {
+                console.log(data);
+                if (data.status == 'finished') {
+                  window.location.replace("{{ url_for('result') }}");
+                }
+              }
+            )}
+          , 1000);
+      });
+    </script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,11 +58,12 @@
             <hr class="intro-divider">
             <p>Type in the word (or phrase) and hit the button</p>
             <form action="{{ url_for('calc')}}" method="post">
-              <input type="text" name="query" value="the_phrase">
-              <input type="number" name="runtime" value="60">
+              <input type="text" name="query" value="{{ phrase }}">
+              <input type="number" name="runtime" value="{{ time }}">
               <button type="submit" name="button" class="btn">Calculate!</button>
             </form>
-            {% block content %}{% endblock %}
+            <h5>Please wait while we collect and analyze data. This could take a while...</h5>
+            <p>Meanwhile, you can go read about how the score in computed <a href="#">here</a></p>
             <hr class="intro-divider">
             <p>
               The formula is still a bit wibbly wobbly and it will not give you an absolute determinstic score.<br>
