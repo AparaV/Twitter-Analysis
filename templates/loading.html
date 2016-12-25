@@ -58,7 +58,7 @@
             <hr class="intro-divider">
             <p>Type in the word (or phrase) and hit the button</p>
             <form action="{{ url_for('calc')}}" method="post">
-              <input type="text" name="query" value="{{ phrase }}">
+              <input type="text" name="query" value="{{ text }}">
               <input type="number" name="runtime" value="{{ time }}">
               <button type="submit" name="button" class="btn">Calculate!</button>
             </form>

@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% block content %}
-{% if pop is not none and phrase %}
-  <h5>The popularity of '{{ phrase }}' is {{ pop }}</h5>
+{% if pop is not none and text %}
+  <h5>The popularity of '{{ text }}' is {{ pop }}</h5>
 {% else %}
   <h5>Could not find data</h5>
 {% endif %}

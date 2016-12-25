@@ -10,6 +10,7 @@ fname = './tmp/liveStream.json'
 
 global th
 global score
+global phrase
 global finished
 
 @app.route("/")
@@ -29,13 +30,13 @@ def calc():
     th = Thread(target=something, args=(text, run_time))
     th.start()
     # x = calculate(text, run_time)
-    return render_template('loading.html', phrase=phrase, time=run_time)
+    return render_template('loading.html', text=phrase, time=run_time)
 
 @app.route("/result")
 def result():
     global score
     global phrase
-    return render_template('output.html', phrase=phrase, pop=score)
+    return render_template('output.html', text=phrase, pop=score)
 
 def something(phrase, time):
     global finished
@@ -45,13 +46,18 @@ def something(phrase, time):
 
 @app.route("/status")
 def status():
+    global finished
     return jsonify(dict(status=('finished' if finished else 'running')))
 
-def calculate(phrase, runTime):
+def calculate(text, runTime):
     auth, api = tweetminer.get_credentials()
-    tweetminer.get_live_tweets(auth, phrase, fname=fname, runTime=runTime)
-    score = tweetminer.get_popularity(runTime=runTime, fname=fname)
-    return score
+    tweetminer.get_live_tweets(auth, text, fname=fname, runTime=runTime)
+    x = tweetminer.get_popularity(runTime=runTime, fname=fname)
+    return x
 
 if __name__ == "__main__":
+    global th
+    global phrase
+    global score
+    global finished
     app.run(debug=True)
