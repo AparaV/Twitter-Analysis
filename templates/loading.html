@@ -26,7 +26,7 @@
       $(document).ready(function() {
         var refresh_id = setInterval(function() {
             $.get(
-              "{{ url_for('thread_status') }}",
+              "{{ url_for('status') }}",
               function(data) {
                 console.log(data);
                 if (data.status == 'finished') {

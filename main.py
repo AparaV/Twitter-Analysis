@@ -8,6 +8,10 @@ app = Flask(__name__)
 
 fname = './tmp/liveStream.json'
 
+global th
+global score
+global finished
+
 @app.route("/")
 def init():
     return render_template('index.html')
@@ -40,7 +44,7 @@ def something(phrase, time):
     finished = True
 
 @app.route("/status")
-def thread_status():
+def status():
     return jsonify(dict(status=('finished' if finished else 'running')))
 
 def calculate(phrase, runTime):
@@ -50,4 +54,4 @@ def calculate(phrase, runTime):
     return score
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
