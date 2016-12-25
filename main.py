@@ -34,11 +34,15 @@ def calc():
 
 @app.route("/result")
 def result():
-    return render_template('output.html', text=phrase, pop=score)
+    search = phrase
+    x = score
+    resetglobal()
+    return render_template('output.html', text=search, pop=x)
 
 def something(text, time):
     global finished
     global score
+    global th
     score = calculate(text, time)
     finished = True
 
@@ -52,6 +56,16 @@ def calculate(text, runTime):
     tweetminer.get_live_tweets(auth, text, fname=fname, runTime=runTime)
     x = tweetminer.get_popularity(runTime=runTime, fname=fname)
     return x
+
+def resetglobal():
+    global th
+    global score
+    global phrase
+    global finished
+    th = None
+    score = -1
+    phrase = ""
+    finished = False
 
 if __name__ == "__main__":
     app.run(debug=True)
