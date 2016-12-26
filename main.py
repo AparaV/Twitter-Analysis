@@ -10,7 +10,7 @@ fname = './tmp/liveStream.json'
 
 
 class Global:
-    th = None
+    th = Thread()
     score = -1
     phrase = ""
     finished = False
@@ -18,12 +18,12 @@ class Global:
 
 @app.route("/")
 def init():
+    resetglobal()
     return render_template('index.html')
 
 
 @app.route("/", methods=['POST'])
 def calc():
-    resetglobal()
     Global.phrase = request.form['query']
     run_time = int(request.form['runtime'])
     Global.finished = False
@@ -48,7 +48,7 @@ def something(text, time):
 
 
 def resetglobal():
-    Global.th = None
+    Global.th = Thread()
     Global.score = -1
     Global.phrase = ""
     Global.finished = False
