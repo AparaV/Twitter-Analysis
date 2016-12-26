@@ -44,6 +44,11 @@ def status():
     return jsonify(dict(status=('finished' if Global.finished else 'running')))
 
 
+@app.route("/formula")
+def formula():
+    return render_template('formula.html')
+
+
 def something(text, time):
     Global.score = calculate(text, time)
     Global.finished = True

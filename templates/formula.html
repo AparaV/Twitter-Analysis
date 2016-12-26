@@ -21,23 +21,6 @@
     <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        var refresh_id = setInterval(function() {
-            $.get(
-              "{{ url_for('status') }}",
-              function(data) {
-                console.log(data);
-                if (data.status == 'finished') {
-                  window.location.replace("{{ url_for('result') }}");
-                }
-              }
-            )}
-          , 2000);
-      });
-    </script>
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -54,25 +37,32 @@
         <div class="col-lg-12">
           <div class="intro-message">
             <h1>How popular is it on Twitter?</h1>
-            <h3>Find the popularity of a phrase on Twitter, live!</h3>
+            <h3>The Algorithm</h3>
             <hr class="intro-divider">
-            <p>Type in the word (or phrase) and hit the button</p>
-            <form action="{{ url_for('calc')}}" method="post">
-              <input type="text" name="query" value="{{ text }}">
-              <input type="number" name="runtime" value="{{ time }}">
-              <button type="submit" name="button" class="btn">Calculate!</button>
-            </form>
-            <h5>Please wait while we collect and analyze data. This could take a while...</h5>
-            <p>Meanwhile, you can go read about how the score in computed in this super short excerpt <a target="_blank" href="{{ url_for('formula') }}">here</a></p>
-            <hr class="intro-divider">
-            <p>
-              The formula is still a bit wibbly wobbly and it will not give you an absolute determinstic score.<br>
-              However, a few other phrases that you think are way more (or less) popular will help you get a qualitative (or relativistic) sense.<br><br>
-              The default timeout is 60 seconds. So you will have to wait for <u>at least</u> 60 seconds to get a score. You can change this variable.<br>
-              If you repeatedly search, you might exceed the rate limit for the app which could cause permanent banning of your IP.<br>
-              A few dozen searches is alright. But remember that you may not be the only user.<br><br>
-              If you think you found a bug (or broke it), report it via <a target="_blank" href="https://github.com/traxex33/Twitter-Analysis/issues">GitHub</a>.<br><br>
+            <p style="text-align:justify">
+              First, I had find all the factors that determine the popularity. The total number of tweets gathered in the time interval is the most obvious.
+              The number of followers the tweeter has should also play a role because if he has more followers, then the tweet ends up on more user’s feeds.
+              Then there is the retweet count. This makes sense because if a tweet is being retweeted more, then it is clearly reaching more people and getting more attention.
+              Then the number of likes is similar to the retweet count.
+              <br><br>
+              Hence, I calculated the total number of tweets (`T`). Then I summed up retweet count for all tweets (`T_R`) and calculate the retweet index (`R`).
+              Then I averaged the number of followers each user had (`f_i`) across the entire set. Then, for the likes, I divided the likes each tweet had (`l_i`) with the
+              number of followers the user had because liked tweets show up less on someone else’s feed. I averaged this new likes index (`L_i`) across the entire set.
+              Then I summed them all up and divided them by the amount of time (`t`) the tweets were collected.
+              <br><br>
+              <div style="text-align:center">
+                `L_i = l_i/f_i`<br><br>
+                `R = T_R/T`<br><br>
+                `p = (sum_(i)L_i)/T + (sum_(i)f_i)/T + R + T`<br><br>
+                `P = p/t`
+              </div>
+              <br><br>
+              Clearly there are some fallacies here. For instance, I should probably factor in the number of followers for the retweets similar to the likes count.
+              Maybe I could assign weights to each of these factors and then find the score which would help a lot as it scales down the score to a range.
+              There is obviously scope for improvement here. In fact, I want to improve this and I tweak this often when I get new ideas.
             </p>
+            <hr class="intro-divider">
+            <p>Go back <a href="{{ url_for('init') }}">home</a></p>
           </div>
         </div>
       </div>
@@ -92,7 +82,7 @@
       <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8" style="text-align:center">
-          <a target="_blank" href="https://traxex33.github.io/#!/archive/2016/dec/building-twitter-app">Read my blog post for more about this app</a>
+          <a target="_blank" href="https://traxex33.github.io/#!/archive/2016/dec/building-twitter-app">Read my entire blog post for more about this app</a>
           <br><br>
         </div>
         <div class="col-lg-2"></div>
@@ -115,6 +105,9 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- MathJax -->
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 </body>
 
