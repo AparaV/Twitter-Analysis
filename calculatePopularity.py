@@ -2,7 +2,8 @@ import json
 
 
 class CalculatePopularity():
-    def __init__(self, file='liveStream.json'):
+    def __init__(self, runTime, file='liveStream.json'):
+        self.runTime = runTime
         self.fname = file
 
     def calculateScore(self):
@@ -33,27 +34,36 @@ class CalculatePopularity():
                 likeIndex = self._likeScore(likes, followers)
                 self.likes_score.append(likeIndex)
 
-        self.retweetIndex = self._findRetweetIndex(self.retweetCount, self.totalTweets)
-        self.favoriteIndex = self._findFavoriteIndex(self.likes_score)
-        self.followersIndex = self._findFollowersIndex(self.followers_score)
+        self.retweetIndex = self._findRetweetIndex()
+        self.favoriteIndex = self._findFavoriteIndex()
+        self.followersIndex = self._findFollowersIndex()
 
-        print "Retweet Index", self.retweetIndex
-        print "Favorite Index", self.favoriteIndex
-        print "Followers Index", self.followersIndex
+        popularityScore = 0
+        popularityScore += int(self.retweetIndex + self.favoriteIndex + self.followersIndex + self.totalTweets)
 
-        popularityScore = int(self.retweetIndex + self.favoriteIndex + self.followersIndex + self.totalTweets)
+        if self.runTime != 0:
+            popularityScore /= self.runTime
+        else:
+            popularityScore = "Not defined"
+
         return popularityScore
 
     def _likeScore(self, likes, followers):
-        if followers == 0:
-            return 0
-        return float(likes) / followers
+        if followers != 0:
+            return float(likes) / followers
+        return 0
 
-    def _findRetweetIndex(self, retweetCount, totalTweets):
-        return float(retweetCount) / totalTweets
+    def _findRetweetIndex(self):
+        if self.totalTweets != 0:
+            return float(self.retweetCount) / self.totalTweets
+        return 0
 
-    def _findFavoriteIndex(self, likes):
-        return sum(likes) / float(len(likes))
+    def _findFavoriteIndex(self):
+        if len(self.likes_score) != 0:
+            return sum(self.likes_score) / float(len(self.likes_score))
+        return 0
 
-    def _findFollowersIndex(self, followers):
-        return sum(followers) / float(len(followers))
+    def _findFollowersIndex(self):
+        if len(self.followers_score) != 0:
+            return sum(self.followers_score) / float(len(self.followers_score))
+        return 0

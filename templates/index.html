@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<p>Type in the word (or phrase) and hit the button</p>
+<form action="{{ url_for('calc')}}" method="post">
+  <input type="text" name="query" value="the_phrase">
+  <input type="number" name="runtime" value="60">
+  <button type="submit" name="button" class="btn">Calculate!</button>
+</form>
+{% endblock %}
