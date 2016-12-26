@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+  <p>
+    There was an error processing your request. This can happen due to various reasons.<br>
+    The most probable reason is that there were too many requests made and this website is being <a href="https://dev.twitter.com/rest/public/rate-limiting">rate limited</a>.<br>
+    So do try again after an hour or so.
+    If the error persists, <a href="https://github.com/traxex33/Twitter-Analysis/issues">open an issue</a> with details including the date and time (zone) when the request was made.<br>
+    Go back to the <a href="{{ url_for('init') }}">home page</a>.
+  </p>
+{% endblock %}

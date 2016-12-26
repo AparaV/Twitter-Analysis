@@ -34,6 +34,8 @@ def calc():
 
 @app.route("/result")
 def result():
+    if (Global.phrase == '') or (Global.score == -1):
+        return render_template('error.html')
     return render_template('output.html', text=Global.phrase, pop=Global.score)
 
 
