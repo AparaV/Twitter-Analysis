@@ -14,6 +14,8 @@ class Global:
     score = -1
     phrase = ""
     finished = False
+    api = None
+    auth = None
 
 
 @app.route("/")
@@ -62,11 +64,11 @@ def resetglobal():
 
 
 def calculate(text, runTime):
-    auth, api = tweetminer.get_credentials()
-    tweetminer.get_live_tweets(auth, text, fname=fname, runTime=runTime)
+    tweetminer.get_live_tweets(Global.auth, text, fname=fname, runTime=runTime)
     x = tweetminer.get_popularity(runTime=runTime, fname=fname)
     return x
 
 
 if __name__ == "__main__":
+    Global.auth, Global.api = tweetminer.get_credentials()
     app.run(debug=True)
