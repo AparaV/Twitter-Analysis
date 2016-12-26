@@ -9,6 +9,7 @@
 {% else %}
   <h5>Could not find data</h5>
 {% endif %}
+  <h5><a href="{{ url_for('init') }}">Search</a> for another phrase</h5>
 <script>
   console.log("{{ pop }}")
   console.log("{{ text }}")

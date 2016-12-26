@@ -24,11 +24,10 @@ def init():
 @app.route("/", methods=['POST'])
 def calc():
     resetglobal()
-    text = request.form['query']
+    Global.phrase = request.form['query']
     run_time = int(request.form['runtime'])
     Global.finished = False
-    Global.phrase = text
-    Global.th = Thread(target=something, args=(text, run_time))
+    Global.th = Thread(target=something, args=(Global.phrase, run_time))
     Global.th.start()
     return render_template('loading.html', text=Global.phrase, time=run_time)
 
