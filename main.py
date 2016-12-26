@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask import render_template
 from flask import request
 from threading import Thread
+import tweepy
 import tweetminer
 
 app = Flask(__name__)
@@ -14,8 +15,7 @@ class Global:
     score = -1
     phrase = ""
     finished = False
-    api = None
-    auth = None
+    auth, api = tweetminer.get_credentials()
 
 
 @app.route("/")
@@ -70,5 +70,4 @@ def calculate(text, runTime):
 
 
 if __name__ == "__main__":
-    Global.auth, Global.api = tweetminer.get_credentials()
     app.run(debug=True)
