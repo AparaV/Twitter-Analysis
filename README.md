@@ -51,3 +51,5 @@ access_secret = os.environ.get('ACCESS_SECRET', 'your_access_secret')
 ```
 
 Now run `main.py` and go to `localhost:5000/` to test your copy.
+
+The [local-console](https://github.com/traxex33/Twitter-Analysis/tree/local-console) branch is outdated and lacks many features (and contains a lot of bugs). So refrain from using it. However, it does have a function to analyze user profiles, and I do not plan to incorporate that feature to the main app in the near future.
