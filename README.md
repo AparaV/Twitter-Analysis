@@ -2,6 +2,11 @@
 Analyze most recent tweets and calculate the 'popularity' of a word or phrase on Twitter.
 You can also check out what your friends (or you!) most commonly tweet about.
 
+##Note
+This branch is outdated and lacks many features (and contains a lot of bugs). So refrain from using it. However, it does have a function to analyze user profiles, and I do not plan to incorporate that feature to the main app in the near future.
+
+For the most recent version go to the [master](https://github.com/traxex33/Twitter-Analysis) branch.
+
 ##Dependencies
 ```
 pip install tweepy
