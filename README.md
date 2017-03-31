@@ -1,10 +1,10 @@
-#Popularity on Twitter
+# Popularity on Twitter
 This app tracks all live tweets containing a search query and calculates a score based on the collected data.
 This app is written in Python and makes use of [tweepy](http://www.tweepy.org/), a python wrapper for the Twitter API.
 
 Check it out in action at [Popularity on Twitter](https://popularity-on-twitter.herokuapp.com/) hosted on [Heroku](http://heroku.com).
 
-##How it works?
+## How it works?
 Using the Twitter [Streaming API](https://dev.twitter.com/streaming/overview), it downloads all live tweets for a specified amount of time that is determined during runtime.
 This can be difficult as the stream does no stop until a manual termination. However, I found a [fix](http://stackoverflow.com/a/41325744/5055644) for that.
 
@@ -27,12 +27,12 @@ Then it becomes a matter of some math to compute the score. This is the formula 
 That was taken from my [blog post](https://traxex33.github.io/#!/archive/2016/dec/building-twitter-app). Consider reading it if you want to know more.
 It also contains math equations (GitHub doesn't natively support rendering mathematical equations).
 
-##Some nuances
+## Some nuances
 Twitter has a rate limit on the streaming API. Hence, you are bound to get some errors if you make too many queries.
 Others may also be using it. So don't be surprised if you get an error thrown on your first attempt.
 Wait for a few hours and try again. Better yet, fork the repo and run it locally!
 
-##How do I run it locally?
+## How do I run it locally?
 Simple.
 
 Clone this repo to you machine.
